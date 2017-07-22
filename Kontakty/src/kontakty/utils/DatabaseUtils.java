@@ -36,6 +36,7 @@ public class DatabaseUtils {
 
 			rs.close();
 			stm.close();
+			conn.close();
 
 			return ile;
 
@@ -54,6 +55,14 @@ public class DatabaseUtils {
 					stm.close();
 				}
 			} catch (Exception eStm) {
+				// nic nie rob
+			}
+
+			try {
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (Exception eConn) {
 				// nic nie rob
 			}
 
@@ -100,6 +109,7 @@ public class DatabaseUtils {
 
 			rs.close();
 			stm.close();
+			conn.close();
 
 			return user;
 
@@ -118,6 +128,14 @@ public class DatabaseUtils {
 					stm.close();
 				}
 			} catch (Exception eStm) {
+				// nic nie rob
+			}
+			
+			try {
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (Exception eConn) {
 				// nic nie rob
 			}
 
@@ -155,6 +173,7 @@ public class DatabaseUtils {
 
 			rs.close();
 			stm.close();
+			conn.close();
 
 			System.out.println("Znaleziono użytkowników: " + ile);
 
@@ -175,6 +194,14 @@ public class DatabaseUtils {
 					stm.close();
 				}
 			} catch (Exception eStm) {
+				// nic nie rob
+			}
+			
+			try {
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (Exception eConn) {
 				// nic nie rob
 			}
 
@@ -203,10 +230,11 @@ public class DatabaseUtils {
 			stm.setString(2, user.getPassword());
 			stm.setString(3, user.getUserImie());
 			stm.setString(4, user.getUserNazwisko());
-			
+
 			stm.execute();
-			
+
 			stm.close();
+			conn.close();
 
 		} catch (SQLException e) {
 			System.out.println("Błąd podczas wykonywania zapytania");
@@ -215,6 +243,14 @@ public class DatabaseUtils {
 					stm.close();
 				}
 			} catch (Exception eStm) {
+				// nic nie rob
+			}
+			
+			try {
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (Exception eConn) {
 				// nic nie rob
 			}
 
