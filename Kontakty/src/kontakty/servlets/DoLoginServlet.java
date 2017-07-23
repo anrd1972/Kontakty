@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import kontakty.connectionUtils.MyConnectionUtils;
 import kontakty.models.UserAccount;
 import kontakty.utils.DatabaseUtils;
 import kontakty.utils.KontaktyUtils;
@@ -80,16 +81,19 @@ public class DoLoginServlet extends HttpServlet {
 
 			dispatcher.forward(request, response);
 		} else {
+			
 			HttpSession session = request.getSession();
 			MyUtils.zapamietajZalogowanegoUzytkownika(session, user);
 			
-			response.sendRedirect(request.getContextPath() + "/index.html");
+			MyConnectionUtils.closeMyConnection(conn);
+			
+			response.sendRedirect(request.getContextPath() + "/main");
 		}
 
 	}
 
 	/**
-	 * Pbsluga POST z przekierowaniem do GET
+	 * Obsluga POST z przekierowaniem do GET
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {

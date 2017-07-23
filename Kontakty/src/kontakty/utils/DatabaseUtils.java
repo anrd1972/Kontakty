@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import kontakty.models.UserAccount;
 
@@ -32,11 +34,8 @@ public class DatabaseUtils {
 			rs.last();
 			ile = rs.getRow();
 
-			System.out.println("Znaleziono użytkowników: " + ile);
-
 			rs.close();
 			stm.close();
-			conn.close();
 
 			return ile;
 
@@ -109,7 +108,6 @@ public class DatabaseUtils {
 
 			rs.close();
 			stm.close();
-			conn.close();
 
 			return user;
 
@@ -130,7 +128,7 @@ public class DatabaseUtils {
 			} catch (Exception eStm) {
 				// nic nie rob
 			}
-			
+
 			try {
 				if (conn != null) {
 					conn.close();
@@ -173,9 +171,6 @@ public class DatabaseUtils {
 
 			rs.close();
 			stm.close();
-			conn.close();
-
-			System.out.println("Znaleziono użytkowników: " + ile);
 
 			return ile;
 
@@ -196,7 +191,7 @@ public class DatabaseUtils {
 			} catch (Exception eStm) {
 				// nic nie rob
 			}
-			
+
 			try {
 				if (conn != null) {
 					conn.close();
@@ -234,7 +229,6 @@ public class DatabaseUtils {
 			stm.execute();
 
 			stm.close();
-			conn.close();
 
 		} catch (SQLException e) {
 			System.out.println("Błąd podczas wykonywania zapytania");
@@ -245,7 +239,7 @@ public class DatabaseUtils {
 			} catch (Exception eStm) {
 				// nic nie rob
 			}
-			
+
 			try {
 				if (conn != null) {
 					conn.close();
@@ -256,6 +250,65 @@ public class DatabaseUtils {
 
 			throw e;
 		}
+	}
+
+	/**
+	 * Pobranie listy uzytkowników
+	 * 
+	 * @return
+	 * @throws SQLException
+	 */
+	public static List<UserAccount> dajListeUzytkownikow(Connection conn) throws SQLException {
+
+		List<UserAccount> userList = new ArrayList<UserAccount>();
+
+		String sql = "Select * from Users";
+		
+		PreparedStatement stm = null;
+		ResultSet rs = null;
+		
+		try {
+			
+			stm = conn.prepareStatement(sql);
+			rs = stm.executeQuery();
+			
+			while(rs.next()) {
+				UserAccount user = new UserAccount();
+				user.setIdUser(Integer.parseInt(rs.getString(1)));
+				user.setUsername(rs.getString(2));
+				user.setPassword(rs.getString(3));
+				user.setUserImie(rs.getString(4));
+				user.setUserNazwisko(rs.getString(5));
+				
+				userList.add(user);
+			}
+			
+			rs.close();
+			stm.close();
+			
+			return userList;
+			
+		} catch (SQLException e) {
+			System.out.println("Błąd podczas wykonywania zapytania");
+			try {
+				if (stm != null) {
+					stm.close();
+				}
+			} catch (Exception eStm) {
+				// nic nie rob
+			}
+
+			try {
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (Exception eConn) {
+				// nic nie rob
+			}
+
+			throw e;
+		}
+		
 	}
 
 }

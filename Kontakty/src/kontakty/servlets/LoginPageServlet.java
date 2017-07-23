@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import kontakty.connectionUtils.MyConnectionUtils;
 import kontakty.utils.DatabaseUtils;
 import kontakty.utils.MyUtils;
 
@@ -41,6 +42,8 @@ public class LoginPageServlet extends HttpServlet {
 			conn = MyUtils.nawiazIzwrocPolaczenie(req);
 
 			userAccounts = DatabaseUtils.ileUserow(conn);
+			
+			MyConnectionUtils.closeMyConnection(conn);
 
 		} catch (SQLException | ClassNotFoundException eSql) {
 			eSql.printStackTrace();

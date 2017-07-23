@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import kontakty.connectionUtils.MyConnectionUtils;
 import kontakty.models.UserAccount;
 import kontakty.utils.DatabaseUtils;
 import kontakty.utils.KontaktyUtils;
@@ -81,6 +82,9 @@ public class DoRegisterServlet extends HttpServlet {
 
 			dispatcher.forward(request, response);
 		} else {
+			
+			MyConnectionUtils.closeMyConnection(conn);
+			
 			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/login.jsp");
 
 			dispatcher.forward(request, response);
