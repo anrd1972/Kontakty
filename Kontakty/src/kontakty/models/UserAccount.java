@@ -7,20 +7,22 @@ public class UserAccount {
 	private String userNazwisko;
 	private String username;
 	private String password;
-	
-	
-	public UserAccount() {}
 
+	private String operacja;
 
-	public UserAccount(int idUser, String userImie, String userNazwisko, String username, String password) {
+	public UserAccount() {
+	}
+
+	public UserAccount(int idUser, String userImie, String userNazwisko, String username, String password,
+			String operacja) {
 		super();
 		this.idUser = idUser;
 		this.userImie = userImie;
 		this.userNazwisko = userNazwisko;
 		this.username = username;
 		this.password = password;
+		this.operacja = operacja;
 	}
-
 
 	/**
 	 * @return the idUser
@@ -29,14 +31,13 @@ public class UserAccount {
 		return idUser;
 	}
 
-
 	/**
-	 * @param idUser the idUser to set
+	 * @param idUser
+	 *            the idUser to set
 	 */
 	public void setIdUser(int idUser) {
 		this.idUser = idUser;
 	}
-
 
 	/**
 	 * @return the userImie
@@ -45,14 +46,13 @@ public class UserAccount {
 		return userImie;
 	}
 
-
 	/**
-	 * @param userImie the userImie to set
+	 * @param userImie
+	 *            the userImie to set
 	 */
 	public void setUserImie(String userImie) {
 		this.userImie = userImie;
 	}
-
 
 	/**
 	 * @return the userNazwisko
@@ -61,14 +61,13 @@ public class UserAccount {
 		return userNazwisko;
 	}
 
-
 	/**
-	 * @param userNazwisko the userNazwisko to set
+	 * @param userNazwisko
+	 *            the userNazwisko to set
 	 */
 	public void setUserNazwisko(String userNazwisko) {
 		this.userNazwisko = userNazwisko;
 	}
-
 
 	/**
 	 * @return the username
@@ -77,14 +76,13 @@ public class UserAccount {
 		return username;
 	}
 
-
 	/**
-	 * @param username the username to set
+	 * @param username
+	 *            the username to set
 	 */
 	public void setUsername(String username) {
 		this.username = username;
 	}
-
 
 	/**
 	 * @return the password
@@ -93,12 +91,27 @@ public class UserAccount {
 		return password;
 	}
 
-
 	/**
-	 * @param password the password to set
+	 * @param password
+	 *            the password to set
 	 */
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+	/**
+	 * @return the operacja
+	 */
+	public String getOperacja() {
+		return operacja;
+	}
+
+	/**
+	 * @param operacja the operacja to set
+	 */
+	public void setOperacja(String operacja) {
+		this.operacja = operacja;
+	}
 	
+
 }

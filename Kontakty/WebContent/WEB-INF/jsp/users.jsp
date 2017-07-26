@@ -24,6 +24,7 @@
 			<td>Nazwa użytkownika</td>
 			<td>Imię</td>
 			<td>Nazwisko</td>
+			<td colspan="2">Operacje</td>
 		</tr>
 		
 		<c:forEach items="${userList}" var="uzytkownik" >
@@ -32,6 +33,8 @@
 				<td>${uzytkownik.username }</td>
 				<td>${uzytkownik.userImie }</td>
 				<td>${uzytkownik.userNazwisko }</td>
+				<td><a href="<%=context %>/reg?mode=M&id=${uzytkownik.idUser }">Edytuj</a>
+				<td>Usuń</td>
 			</tr>
 		</c:forEach>
 

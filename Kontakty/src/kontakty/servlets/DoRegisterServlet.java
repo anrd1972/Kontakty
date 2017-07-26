@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import kontakty.connectionUtils.MyConnectionUtils;
 import kontakty.models.UserAccount;
-import kontakty.utils.DatabaseUtils;
 import kontakty.utils.KontaktyUtils;
 import kontakty.utils.MyUtils;
 
@@ -36,6 +35,8 @@ public class DoRegisterServlet extends HttpServlet {
 		String password = request.getParameter("password");
 		String userImie = request.getParameter("userImie");
 		String userNazwisko = request.getParameter("userNazwisko");
+		
+		String operacja = request.getParameter("operacja");
 
 		UserAccount user = null;
 		boolean hasErrors = false;
@@ -59,8 +60,6 @@ public class DoRegisterServlet extends HttpServlet {
 
 				conn = MyUtils.nawiazIzwrocPolaczenie(request);
 
-				DatabaseUtils.zarejestrujUzytkownika(conn, user);
-
 			} catch (SQLException | ClassNotFoundException eSql) {
 				eSql.printStackTrace();
 				hasErrors = true;
@@ -74,6 +73,8 @@ public class DoRegisterServlet extends HttpServlet {
 			user.setPassword(password);
 			user.setUserImie(userImie);
 			user.setUserNazwisko(userNazwisko);
+			
+			user.setOperacja(operacja);
 
 			request.setAttribute("errorString", stringError);
 			request.setAttribute("user", user);

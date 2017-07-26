@@ -13,6 +13,7 @@
 	<p>Aby korzystać z programu KONAKTY musisz być zarejestrowany w bazie jako użytkownik</p>
 	
 	<form method="POST" action="doRegister">
+		<input type="hidden" name="operacja" value="${user.operacja }">
 		<table border="0">
 			<tr>
 				<td>Użytkownik</td>
@@ -35,7 +36,7 @@
 				<font color="red">*</font></td>
 			</tr>
 			<tr>
-				<td colspan="2"><input type="submit" value="Zarejestruj" />
+				<td colspan="2"><input type="submit" value="Zapisz" />
 					&nbsp;<a href="${pageContext.request.contextPath}/">Powrót</a></td>
 			</tr>
 		</table>

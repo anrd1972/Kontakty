@@ -263,31 +263,31 @@ public class DatabaseUtils {
 		List<UserAccount> userList = new ArrayList<UserAccount>();
 
 		String sql = "Select * from Users";
-		
+
 		PreparedStatement stm = null;
 		ResultSet rs = null;
-		
+
 		try {
-			
+
 			stm = conn.prepareStatement(sql);
 			rs = stm.executeQuery();
-			
-			while(rs.next()) {
+
+			while (rs.next()) {
 				UserAccount user = new UserAccount();
 				user.setIdUser(Integer.parseInt(rs.getString(1)));
 				user.setUsername(rs.getString(2));
 				user.setPassword(rs.getString(3));
 				user.setUserImie(rs.getString(4));
 				user.setUserNazwisko(rs.getString(5));
-				
+
 				userList.add(user);
 			}
-			
+
 			rs.close();
 			stm.close();
-			
+
 			return userList;
-			
+
 		} catch (SQLException e) {
 			System.out.println("Błąd podczas wykonywania zapytania");
 			try {
@@ -308,7 +308,74 @@ public class DatabaseUtils {
 
 			throw e;
 		}
+
+	}
+
+	/**
+	 * pobranie danych użytkownika po ID
+	 * 
+	 * @param idUser
+	 * @return
+	 * @throws SQLException
+	 */
+	public static UserAccount dajDaneUzytkownika(int idUser, Connection conn) throws SQLException {
 		
+		UserAccount user = null;
+		String sql = "Select * from Users where idusers = ?";
+		
+		PreparedStatement stm = null;
+		ResultSet rs = null;
+		
+		try {
+
+			stm = conn.prepareStatement(sql);
+			stm.setInt(1, idUser);
+			rs = stm.executeQuery();
+
+			while (rs.next()) {
+				user = new UserAccount();
+				user.setIdUser(Integer.parseInt(rs.getString(1)));
+				user.setUsername(rs.getString(2));
+				user.setPassword(rs.getString(3));
+				user.setUserImie(rs.getString(4));
+				user.setUserNazwisko(rs.getString(5));
+
+			}
+
+			rs.close();
+			stm.close();
+
+			return user;
+
+		} catch (SQLException e) {
+			System.out.println("Błąd podczas wykonywania zapytania");
+			
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception eRs) {
+				// nic nie rob
+			}
+			try {
+				if (stm != null) {
+					stm.close();
+				}
+			} catch (Exception eStm) {
+				// nic nie rob
+			}
+
+			try {
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (Exception eConn) {
+				// nic nie rob
+			}
+
+			throw e;
+		}
+
 	}
 
 }

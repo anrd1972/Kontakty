@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import kontakty.connectionUtils.MyConnectionUtils;
+import kontakty.models.UserAccount;
 import kontakty.utils.DatabaseUtils;
 import kontakty.utils.MyUtils;
 
@@ -53,6 +54,9 @@ public class LoginPageServlet extends HttpServlet {
 			RequestDispatcher disp = this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/login.jsp");
 			disp.forward(req, resp);
 		} else {
+			UserAccount user = new UserAccount();
+			user.setOperacja("N");
+			req.setAttribute("user", user);
 			RequestDispatcher disp = this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/register.jsp");
 			disp.forward(req, resp);
 		}
