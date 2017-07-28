@@ -172,6 +172,7 @@ public class DatabaseUtils {
 			rs.close();
 			stm.close();
 
+			System.out.println("Zarejestrowanych w bazie " + ile + " użytkowników");
 			return ile;
 
 		} catch (SQLException e) {
@@ -312,20 +313,20 @@ public class DatabaseUtils {
 	}
 
 	/**
-	 * pobranie danych użytkownika po ID
+	 * Pobranie danych użytkownika po ID
 	 * 
 	 * @param idUser
 	 * @return
 	 * @throws SQLException
 	 */
 	public static UserAccount dajDaneUzytkownika(int idUser, Connection conn) throws SQLException {
-		
+
 		UserAccount user = null;
 		String sql = "Select * from Users where idusers = ?";
-		
+
 		PreparedStatement stm = null;
 		ResultSet rs = null;
-		
+
 		try {
 
 			stm = conn.prepareStatement(sql);
@@ -349,7 +350,7 @@ public class DatabaseUtils {
 
 		} catch (SQLException e) {
 			System.out.println("Błąd podczas wykonywania zapytania");
-			
+
 			try {
 				if (rs != null) {
 					rs.close();
@@ -374,6 +375,46 @@ public class DatabaseUtils {
 			}
 
 			throw e;
+		}
+
+	}
+
+	/**
+	 * Update danych użytkownika
+	 * 
+	 * @param conn
+	 * @param user
+	 * @throws SQLException
+	 */
+	public static void updateDanychUzytkownika(Connection conn, UserAccount user) throws SQLException {
+		
+		String sql = "Update Users Set " + "user_username = ?, " + "user_password = ?," + "user_imie = ?,"
+				+ "user_nazwisko = ? " + "Where idusers = ?";
+
+		PreparedStatement stm = null;
+
+		try {
+			stm = conn.prepareStatement(sql);
+			
+			stm.setString(1, user.getUsername());
+			stm.setString(2, user.getPassword());
+			stm.setString(3, user.getUserImie());
+			stm.setString(4, user.getUserNazwisko());
+			stm.setInt(5, user.getIdUser());
+
+			stm.executeUpdate();
+
+			stm.close();
+
+		} finally {
+			try {
+				if (stm != null) {
+					stm.close();
+				}
+			} catch (Exception e) {
+				//nic nie rob
+			}
+			
 		}
 
 	}

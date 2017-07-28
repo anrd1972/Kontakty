@@ -53,7 +53,9 @@ public class RegisterPageServlet extends HttpServlet {
 				conn = MyUtils.nawiazIzwrocPolaczenie(request);
 
 				user = DatabaseUtils.dajDaneUzytkownika(idUser, conn);
+				
 				user.setOperacja(operacja);
+				user.setIdUser(idUser);
 
 				MyConnectionUtils.closeMyConnection(conn);
 
@@ -65,7 +67,6 @@ public class RegisterPageServlet extends HttpServlet {
 		
 			if (hasErrors) {
 				response.sendRedirect(request.getServletPath() + "/users");
-				return;
 			}
 
 			request.setAttribute("errorString", errorString);

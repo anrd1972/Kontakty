@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import kontakty.connectionUtils.MyConnectionUtils;
 import kontakty.models.UserAccount;
+import kontakty.utils.DatabaseUtils;
 import kontakty.utils.KontaktyUtils;
 import kontakty.utils.MyUtils;
 
@@ -35,8 +36,9 @@ public class DoRegisterServlet extends HttpServlet {
 		String password = request.getParameter("password");
 		String userImie = request.getParameter("userImie");
 		String userNazwisko = request.getParameter("userNazwisko");
-		
+
 		String operacja = request.getParameter("operacja");
+		String id = request.getParameter("idUser");
 
 		UserAccount user = null;
 		boolean hasErrors = false;
@@ -52,11 +54,16 @@ public class DoRegisterServlet extends HttpServlet {
 			try {
 
 				user = new UserAccount();
+				
+				if (operacja.equals("M")) {
+					user.setIdUser(Integer.parseInt(id));
+				}
 
 				user.setUsername(username);
 				user.setPassword(password);
 				user.setUserImie(userImie);
 				user.setUserNazwisko(userNazwisko);
+				user.setOperacja(operacja);
 
 				conn = MyUtils.nawiazIzwrocPolaczenie(request);
 
@@ -73,22 +80,34 @@ public class DoRegisterServlet extends HttpServlet {
 			user.setPassword(password);
 			user.setUserImie(userImie);
 			user.setUserNazwisko(userNazwisko);
-			
+
 			user.setOperacja(operacja);
+			
+			if (operacja.equals("M")) {
+				user.setIdUser(Integer.parseInt(id));
+			}
 
 			request.setAttribute("errorString", stringError);
 			request.setAttribute("user", user);
 
 			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/register.jsp");
-
 			dispatcher.forward(request, response);
 		} else {
-			
-			MyConnectionUtils.closeMyConnection(conn);
-			
-			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/login.jsp");
+			try {
+				if (operacja.equals("N")) {
+					DatabaseUtils.zarejestrujUzytkownika(conn, user);
+					MyConnectionUtils.closeMyConnection(conn);
+					response.sendRedirect(request.getContextPath() + "/");
+				} else {
+					DatabaseUtils.updateDanychUzytkownika(conn, user);
+					MyConnectionUtils.closeMyConnection(conn);
+					response.sendRedirect(request.getContextPath() + "/users");
+				}
+			} catch (SQLException e) {
+				System.out.println("Błąd podczas zapisu do bazy danych!");
+			}
 
-			dispatcher.forward(request, response);
+			
 		}
 
 	}
@@ -103,6 +122,7 @@ public class DoRegisterServlet extends HttpServlet {
 
 	/**
 	 * Sprawdzanie czy wymagane dane z formularza nie są puste
+	 * 
 	 * @param username
 	 * @param password
 	 * @param userImie
