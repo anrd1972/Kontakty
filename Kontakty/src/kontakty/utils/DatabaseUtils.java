@@ -387,7 +387,7 @@ public class DatabaseUtils {
 	 * @throws SQLException
 	 */
 	public static void updateDanychUzytkownika(Connection conn, UserAccount user) throws SQLException {
-		
+
 		String sql = "Update Users Set " + "user_username = ?, " + "user_password = ?," + "user_imie = ?,"
 				+ "user_nazwisko = ? " + "Where idusers = ?";
 
@@ -395,7 +395,7 @@ public class DatabaseUtils {
 
 		try {
 			stm = conn.prepareStatement(sql);
-			
+
 			stm.setString(1, user.getUsername());
 			stm.setString(2, user.getPassword());
 			stm.setString(3, user.getUserImie());
@@ -412,9 +412,42 @@ public class DatabaseUtils {
 					stm.close();
 				}
 			} catch (Exception e) {
-				//nic nie rob
+				// nic nie rob
 			}
+
+		}
+
+	}
+
+	/**
+	 * Usuwanie uzytkownika z bazy
+	 * 
+	 * @param conn
+	 * @param id
+	 * @throws SQLException
+	 */
+	public static void usunUzytkownika(Connection conn, int id) throws SQLException {
+
+		String sql = "DELETE FROM users WHERE idusers = " + id;
+
+		PreparedStatement stm = null;
+
+		try {
+			stm = conn.prepareStatement(sql);
+
+			stm.executeUpdate(sql);
 			
+			stm.close();
+
+		} finally {
+			try {
+				if (stm != null) {
+					stm.close();
+				}
+			} catch (Exception e) {
+				// nic nie rob
+			}
+
 		}
 
 	}

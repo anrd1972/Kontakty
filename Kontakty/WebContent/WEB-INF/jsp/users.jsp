@@ -34,7 +34,7 @@
 				<td>${uzytkownik.userImie }</td>
 				<td>${uzytkownik.userNazwisko }</td>
 				<td><a href="<%=context %>/reg?mode=M&id=${uzytkownik.idUser }">Edytuj</a>
-				<td>Usuń</td>
+				<td><a href="<%=context %>/del?id=${uzytkownik.idUser }">Usuń</a></td>
 			</tr>
 		</c:forEach>
 
