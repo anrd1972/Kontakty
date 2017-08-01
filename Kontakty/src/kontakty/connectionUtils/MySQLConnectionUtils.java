@@ -23,7 +23,7 @@ public class MySQLConnectionUtils {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 
-			String connectionURL = "jdbc:mysql://" + hostname + ":3306/" + dbName;
+			String connectionURL = "jdbc:mysql://" + hostname + ":3306/" + dbName + "?characterEncoding=UTF-8";
 
 			conn = DriverManager.getConnection(connectionURL, username, rootPassword);
 			

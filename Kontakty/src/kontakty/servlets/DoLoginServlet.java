@@ -35,6 +35,8 @@ public class DoLoginServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
+		request.setCharacterEncoding("utf-8");
 
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
@@ -45,7 +47,7 @@ public class DoLoginServlet extends HttpServlet {
 
 		Connection conn = null;
 
-		if (sprawdzDaneLogowanie(username, password)) {
+		if (KontaktyUtils.sprawdzDaneLogowanie(username, password)) {
 			hasErrors = true;
 			stringError = "Użytkownik i hasło są wymagane";
 		} else {
@@ -100,21 +102,5 @@ public class DoLoginServlet extends HttpServlet {
 		doGet(request, response);
 	}
 	
-	/**
-	 * Sprawdzanie czy dane do logowania sa puste
-	 * @param username
-	 * @param password
-	 * @return
-	 */
-	public boolean sprawdzDaneLogowanie(String username, String password) {
-
-		boolean isEmpty = false;
-
-		if (KontaktyUtils.isBlankOrNull(username) || KontaktyUtils.isBlankOrNull(password)) {
-			isEmpty = true;
-		}
-
-		return isEmpty;
-	}
-
+	
 }

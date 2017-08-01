@@ -33,6 +33,8 @@ public class RegisterPageServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		request.setCharacterEncoding("utf-8");
+		
 		HttpSession session = request.getSession();
 		UserAccount loggedUser = MyUtils.dajZalogowanegoUzytkownika(session);
 
@@ -41,30 +43,38 @@ public class RegisterPageServlet extends HttpServlet {
 
 		boolean hasErrors = false;
 		String errorString = null;
+		int idUser = 0;
 
 		if (loggedUser == null) {
 			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/login.jsp");
 			dispatcher.forward(request, response);
 		} else {
-			int idUser = Integer.parseInt(request.getParameter("id"));
+
 			String operacja = request.getParameter("mode");
 
-			try {
-				conn = MyUtils.nawiazIzwrocPolaczenie(request);
+			if (operacja.equals("M")) {
+				idUser = Integer.parseInt(request.getParameter("id"));
 
-				user = DatabaseUtils.dajDaneUzytkownika(idUser, conn);
-				
+				try {
+					conn = MyUtils.nawiazIzwrocPolaczenie(request);
+
+					user = DatabaseUtils.dajDaneUzytkownika(idUser, conn);
+
+					user.setOperacja(operacja);
+					user.setIdUser(idUser);
+
+					MyConnectionUtils.closeMyConnection(conn);
+
+				} catch (ClassNotFoundException | SQLException e) {
+					hasErrors = true;
+					errorString = "Błąd podczas pobierania listy użytkowników";
+					System.out.println(e.getMessage());
+				}
+			} else {
+				user = new UserAccount();
 				user.setOperacja(operacja);
-				user.setIdUser(idUser);
+			} 
 
-				MyConnectionUtils.closeMyConnection(conn);
-
-			} catch (ClassNotFoundException | SQLException e) {
-				hasErrors = true;
-				errorString = "Błąd podczas pobierania listy użytkowników";
-				System.out.println(e.getMessage());
-			}
-		
 			if (hasErrors) {
 				response.sendRedirect(request.getServletPath() + "/users");
 			}
@@ -76,7 +86,7 @@ public class RegisterPageServlet extends HttpServlet {
 					.getRequestDispatcher("/WEB-INF/jsp/register.jsp");
 			dispatcher.forward(request, response);
 		}
-		
+
 	}
 
 	@Override

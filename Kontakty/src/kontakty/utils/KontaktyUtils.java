@@ -82,4 +82,43 @@ public class KontaktyUtils {
 		return isEmpty;
 	}
 	
+	/**
+	 * Sprawdzanie czy dane do logowania sa puste
+	 * @param username
+	 * @param password
+	 * @return
+	 */
+	public static boolean sprawdzDaneLogowanie(String username, String password) {
+
+		boolean isEmpty = false;
+
+		if (KontaktyUtils.isBlankOrNull(username) || KontaktyUtils.isBlankOrNull(password)) {
+			isEmpty = true;
+		}
+
+		return isEmpty;
+	}
+
+	
+	/**
+	 * Sprawdzanie czy wymagane dane z formularza nie są puste
+	 * 
+	 * @param username
+	 * @param password
+	 * @param userImie
+	 * @param userNazwisko
+	 * @return
+	 */
+	public static boolean sprawdzDaneRejestracja(String username, String password, String userImie, String userNazwisko) {
+
+		boolean isEmpty = false;
+
+		if (KontaktyUtils.isBlankOrNull(username) || KontaktyUtils.isBlankOrNull(password)
+				|| KontaktyUtils.isBlankOrNull(userImie) || KontaktyUtils.isBlankOrNull(userNazwisko)) {
+			isEmpty = true;
+		}
+
+		return isEmpty;
+	}
+	
 }

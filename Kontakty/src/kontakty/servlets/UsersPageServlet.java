@@ -29,6 +29,8 @@ public class UsersPageServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
+		request.setCharacterEncoding("utf-8");
 
 		HttpSession session = request.getSession();
 		UserAccount user = MyUtils.dajZalogowanegoUzytkownika(session);
@@ -48,14 +50,14 @@ public class UsersPageServlet extends HttpServlet {
 
 				usersList = DatabaseUtils.dajListeUzytkownikow(conn);
 
-				MyConnectionUtils.closeMyConnection(conn);
-
 			} catch (ClassNotFoundException | SQLException e) {
 				errorString = "Błąd podczas pobierania listy użytkowników";
 			}
 
 		}
 
+		MyConnectionUtils.closeMyConnection(conn);
+		
 		request.setAttribute("errorString", errorString);
 		request.setAttribute("userList", usersList);
 

@@ -32,6 +32,8 @@ public class DoRegisterServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		request.setCharacterEncoding("utf-8");
+
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		String userImie = request.getParameter("userImie");
@@ -46,7 +48,7 @@ public class DoRegisterServlet extends HttpServlet {
 
 		Connection conn = null;
 
-		if (sprawdzDaneRejestracja(username, password, userImie, userNazwisko)) {
+		if (KontaktyUtils.sprawdzDaneRejestracja(username, password, userImie, userNazwisko)) {
 			hasErrors = true;
 			stringError = "Pola oznaczone gwiazdką są wymagane!";
 		} else {
@@ -54,7 +56,7 @@ public class DoRegisterServlet extends HttpServlet {
 			try {
 
 				user = new UserAccount();
-				
+
 				if (operacja.equals("M")) {
 					user.setIdUser(Integer.parseInt(id));
 				}
@@ -82,7 +84,7 @@ public class DoRegisterServlet extends HttpServlet {
 			user.setUserNazwisko(userNazwisko);
 
 			user.setOperacja(operacja);
-			
+
 			if (operacja.equals("M")) {
 				user.setIdUser(Integer.parseInt(id));
 			}
@@ -98,16 +100,23 @@ public class DoRegisterServlet extends HttpServlet {
 					DatabaseUtils.zarejestrujUzytkownika(conn, user);
 					MyConnectionUtils.closeMyConnection(conn);
 					response.sendRedirect(request.getContextPath() + "/");
-				} else {
+				} else if (operacja.equals("M")) {
 					DatabaseUtils.updateDanychUzytkownika(conn, user);
 					MyConnectionUtils.closeMyConnection(conn);
 					response.sendRedirect(request.getContextPath() + "/users");
+				} else if (operacja.equals("D")) {
+					DatabaseUtils.zarejestrujUzytkownika(conn, user);
+					MyConnectionUtils.closeMyConnection(conn);
+					response.sendRedirect(request.getContextPath() + "/users");
+				} else {
+					stringError = "Nierozpoznana operacja!";
+					response.sendRedirect(request.getContextPath() + "/users");
 				}
+
 			} catch (SQLException e) {
 				System.out.println("Błąd podczas zapisu do bazy danych!");
 			}
 
-			
 		}
 
 	}
@@ -118,27 +127,6 @@ public class DoRegisterServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doGet(request, response);
-	}
-
-	/**
-	 * Sprawdzanie czy wymagane dane z formularza nie są puste
-	 * 
-	 * @param username
-	 * @param password
-	 * @param userImie
-	 * @param userNazwisko
-	 * @return
-	 */
-	public boolean sprawdzDaneRejestracja(String username, String password, String userImie, String userNazwisko) {
-
-		boolean isEmpty = false;
-
-		if (KontaktyUtils.isBlankOrNull(username) || KontaktyUtils.isBlankOrNull(password)
-				|| KontaktyUtils.isBlankOrNull(userImie) || KontaktyUtils.isBlankOrNull(userNazwisko)) {
-			isEmpty = true;
-		}
-
-		return isEmpty;
 	}
 
 }
