@@ -5,6 +5,7 @@
 
 <%
 	String context = application.getContextPath();
+	Integer ileUserow = (Integer) request.getAttribute("ile");
 %>
 
 <html>
@@ -34,7 +35,23 @@
 				<td>${uzytkownik.userImie }</td>
 				<td>${uzytkownik.userNazwisko }</td>
 				<td><a href="<%=context %>/reg?mode=M&id=${uzytkownik.idUser }">Edytuj</a>
-				<td><a href="<%=context %>/del?id=${uzytkownik.idUser }">Usuń</a></td>
+				
+				<td>
+					<c:set var="ilosc" value="<%=ileUserow %>"/>
+					
+					<c:choose>
+					
+						<c:when test="${ilosc > 1}">
+							<a href="<%=context %>/del?id=${uzytkownik.idUser }">Usuń</a>
+						</c:when>
+						
+						<c:otherwise>
+						 &nbsp;
+						</c:otherwise>
+					</c:choose>
+				</td>
+				
+				
 			</tr>
 		</c:forEach>
 
@@ -47,6 +64,8 @@
 	<p/>
 	<hr style="height: 1px">
 	<a href="<%=context%>/main">Strona główna</a> &nbsp;&nbsp;<a href="<%=context%>/login">Wyloguj</a>
+	
+	<p>Zarejestrowanych użytkowników: <%=ileUserow %></p>
 
 </body>
 </html>

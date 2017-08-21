@@ -22,7 +22,7 @@ public class DatabaseUtils {
 
 		int ile = 0;
 
-		String sql = "Select count(*) from Users";
+		String sql = "Select * from Users";
 
 		PreparedStatement stm = null;
 		ResultSet rs = null;
@@ -31,9 +31,9 @@ public class DatabaseUtils {
 			stm = conn.prepareStatement(sql);
 
 			rs = stm.executeQuery();
-			rs.last();
-			ile = rs.getRow();
-
+			while (rs.next()) {
+				ile++;
+			}
 			rs.close();
 			stm.close();
 

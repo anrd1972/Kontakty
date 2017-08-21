@@ -39,6 +39,8 @@ public class UsersPageServlet extends HttpServlet {
 		
 		Connection conn = null;
 		List<UserAccount> usersList = null;
+		
+		int ileUserow = 0;
 
 		if (user == null) {
 			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/login.jsp");
@@ -49,6 +51,8 @@ public class UsersPageServlet extends HttpServlet {
 				conn = MyUtils.nawiazIzwrocPolaczenie(request);
 
 				usersList = DatabaseUtils.dajListeUzytkownikow(conn);
+				
+				ileUserow = usersList.size();
 
 			} catch (ClassNotFoundException | SQLException e) {
 				errorString = "Błąd podczas pobierania listy użytkowników";
@@ -56,8 +60,10 @@ public class UsersPageServlet extends HttpServlet {
 
 		}
 
+		System.out.println(ileUserow);
 		MyConnectionUtils.closeMyConnection(conn);
 		
+		request.setAttribute("ile", ileUserow);
 		request.setAttribute("errorString", errorString);
 		request.setAttribute("userList", usersList);
 
