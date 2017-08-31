@@ -4,30 +4,38 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<style type="text/css">
+	<%@include file="css/style.css"%>
+</style>
+
 <title>Logowanie</title>
 </head>
 <body>
 
-	<p style="color: red;">${errorString}</p>
+	<div id="container">
+
+	<p class="errorRed" align="center"> ${errorString}</p>
 
 	<form method="POST" action="doLogin">
-		<table border="0">
+		<table border="0" align="center" cellpadding="4">
 			<tr>
-				<td>Użytkownik</td>
+				<td align="right">Użytkownik</td>
 				<td><input type="text" name="username" value="${user.username}" />
 				</td>
 			</tr>
 			<tr>
-				<td>Hasło</td>
-				<td><input type="password" name="password" value="${user.password}" />
+				<td align="right">Hasło</td>
+				<td><input type="password" name="password" value="${user.password}"/>
 				</td>
 			</tr>
 			<tr>
-				<td colspan="2"><input type="submit" value="Zaloguj" /> &nbsp;<a
-					href="${pageContext.request.contextPath}/">Powrót</a></td>
+				<td colspan="2" align="center"><input type="submit" value="Zaloguj" class="formButton"/></td>
 			</tr>
 		</table>
 	</form>
+	
+	</div>
 
 </body>
 </html>

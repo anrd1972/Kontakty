@@ -4,11 +4,17 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+	<%@include file="css/style.css"%>
+</style>
+
 <title>Rejestracja użytkownika</title>
 </head>
 <body>
 
-	<p style="color: red;">${errorString}</p>
+<div id="container">
+
+	<p class="errorRed">${errorString}</p>
 
 	<p>Aby korzystać z programu KONAKTY musisz być zarejestrowany w
 		bazie jako użytkownik</p>
@@ -18,7 +24,7 @@
 		<input type="hidden" name="operacja" value="${user.operacja }">
 		<input type="hidden" name="idUser" value="${user.idUser }">
 
-		<table border="0">
+		<table border="0" align="center" cellpadding="4">
 			<tr>
 				<td>Użytkownik</td>
 				<td><input type="text" name="username" value="${user.username}" /><font
@@ -40,7 +46,7 @@
 					value="${user.userNazwisko}" /> <font color="red">*</font></td>
 			</tr>
 			<tr>
-				<td colspan="2"><input type="submit" value="Zapisz" /> &nbsp;<a
+				<td colspan="2"><input type="submit" value="Zapisz" class="formButton"/> &nbsp;<a
 					href="${pageContext.request.contextPath}/">Powrót</a></td>
 			</tr>
 		</table>
@@ -49,5 +55,6 @@
 		<font color="red">*</font> - pola wymagane
 	</p>
 
+</div>
 </body>
 </html>

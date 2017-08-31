@@ -11,15 +11,22 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<style type="text/css">
+	<%@include file="css/style.css"%>
+</style>
+
 <title>Użytkownicy</title>
 </head>
 <body>
 
-	<p style="color: red;">${errorString}</p>
+<div id="container">
 
-	<h3>Lista zarejestrowanych użytkowników</h3>
+	<p class="errorRed" align="center">${errorString}</p>
 
-	<table border="1" cellpadding="4" cellspacing="0">
+	<h2>Lista zarejestrowanych użytkowników</h2>
+
+	<table width="600" border="0" align="center" cellpadding="4">
 		<tr>
 			<td>ID</td>
 			<td>Nazwa użytkownika</td>
@@ -66,6 +73,8 @@
 	<a href="<%=context%>/main">Strona główna</a> &nbsp;&nbsp;<a href="<%=context%>/login">Wyloguj</a>
 	
 	<p>Zarejestrowanych użytkowników: <%=ileUserow %></p>
+	
+	</div>
 
 </body>
 </html>

@@ -8,9 +8,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style type="text/css">
+	<%@include file="css/style.css"%>
+</style>
 <title>Strona główna</title>
 </head>
 <body>
+
+<div id="container">
 
 <h2>Kontkaty</h2>
 
@@ -25,6 +30,8 @@
 		</td>
 		</tr>
 	</table>
+	
+</div>
 
 </body>
 </html>
