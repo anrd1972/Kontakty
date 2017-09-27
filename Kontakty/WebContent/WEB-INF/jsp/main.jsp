@@ -19,11 +19,14 @@
 
 <h2>Kontkaty</h2>
 
-	<table border="0" cellpadding="2" cellspacing="2">
+	<table border="0" cellpadding="2" cellspacing="2" class="mytable">
 
 		<tr>
 		<td>
 			<a href="<%=context%>/users">Użytkownicy</a>
+		</td>
+		<td>
+			<a href="<%=context%>/contacts">Moje kontakty</a>
 		</td>
 		<td>
 			<a href="<%=context%>/login">Wyloguj</a>

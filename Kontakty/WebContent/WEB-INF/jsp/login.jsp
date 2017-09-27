@@ -18,15 +18,15 @@
 	<p class="errorRed" align="center"> ${errorString}</p>
 
 	<form method="POST" action="doLogin">
-		<table border="0" align="center" cellpadding="4">
+		<table border="0" align="center" cellpadding="4" width="400" class="mytable">
 			<tr>
 				<td align="right">Użytkownik</td>
-				<td><input type="text" name="username" value="${user.username}" />
+				<td><input type="text" name="username" value="${user.username}" size="30"/>
 				</td>
 			</tr>
 			<tr>
 				<td align="right">Hasło</td>
-				<td><input type="password" name="password" value="${user.password}"/>
+				<td><input type="password" name="password" value="${user.password}" size="30"/>
 				</td>
 			</tr>
 			<tr>

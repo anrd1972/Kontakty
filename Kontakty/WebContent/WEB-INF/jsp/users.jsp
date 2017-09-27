@@ -26,7 +26,7 @@
 
 	<h2>Lista zarejestrowanych użytkowników</h2>
 
-	<table width="600" border="0" align="center" cellpadding="4">
+	<table width="600" border="0" align="center" cellpadding="4" class="mytable">
 		<tr>
 			<td>ID</td>
 			<td>Nazwa użytkownika</td>
@@ -64,7 +64,7 @@
 
 	</table>
 	
-	<p>
+	<p align="center">
 		<a href="<%=context %>/reg?mode=D&id=">Dodaj nowego użytkownika</a>
 	</p>
 	

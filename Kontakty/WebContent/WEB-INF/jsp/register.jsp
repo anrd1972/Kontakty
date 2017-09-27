@@ -19,7 +19,7 @@
 	<p>Aby korzystać z programu KONAKTY musisz być zarejestrowany w
 		bazie jako użytkownik</p>
 
-	<form title="Rejestracja" method="POST" action="doRegister">
+	<form title="Rejestracja" method="POST" action="doRegister" class="mytable">
 
 		<input type="hidden" name="operacja" value="${user.operacja }">
 		<input type="hidden" name="idUser" value="${user.idUser }">

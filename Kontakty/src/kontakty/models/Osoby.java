@@ -4,10 +4,10 @@ import java.util.Date;
 
 public class Osoby {
 	
-	private int idOsoby;
-	private String osobaImie;
+	private int idOsoby;			//not null
+	private String osobaImie; 		//not null
 	private String osobaNazwisko;
-	private String osobaEmail;
+	private String osobaEmail;		//not null
 	private String osobaTelefonDom;
 	private String osobaTelefonPraca;
 	private String osobaAdresUlica;
