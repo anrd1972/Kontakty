@@ -28,6 +28,10 @@
 
 	<h2>Lista zarejestrowanych kontaktów</h2>
 	
+	<p>
+		<a href="<%=context%>/new">Dodaj</a>
+	</p>
+	
 	<table border="1" align="center" cellpadding="4" cellspacing="0">
 	
 	<tr>

@@ -17,13 +17,14 @@ public class Osoby {
 	private String osobaAdresKodPocztowy;
 	private Date osobaUrodziny;
 	
+	private String operacja;
 	
 	public Osoby() {}
 
 
 	public Osoby(int idOsoby, String osobaImie, String osobaNazwisko, String osobaEmail, String osobaTelefonDom,
 			String osobaTelefonPraca, String osobaAdresUlica, String osobaAdresNrDomu, String osobaAdresNrMieszkania,
-			String osobaAdresMiasto, String osobaAdresKodPocztowy, Date osobaUrodziny) {
+			String osobaAdresMiasto, String osobaAdresKodPocztowy, Date osobaUrodziny, String operacja) {
 		super();
 		this.idOsoby = idOsoby;
 		this.osobaImie = osobaImie;
@@ -37,6 +38,7 @@ public class Osoby {
 		this.osobaAdresMiasto = osobaAdresMiasto;
 		this.osobaAdresKodPocztowy = osobaAdresKodPocztowy;
 		this.osobaUrodziny = osobaUrodziny;
+		this.operacja = operacja;
 	}
 
 
@@ -230,5 +232,23 @@ public class Osoby {
 	public void setOsobaUrodziny(Date osobaUrodziny) {
 		this.osobaUrodziny = osobaUrodziny;
 	}
+
+
+	/**
+	 * @return the operacja
+	 */
+	public String getOperacja() {
+		return operacja;
+	}
+
+
+	/**
+	 * @param operacja the operacja to set
+	 */
+	public void setOperacja(String operacja) {
+		this.operacja = operacja;
+	}
+	
+	
 
 }
