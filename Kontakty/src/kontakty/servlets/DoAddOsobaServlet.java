@@ -1,7 +1,9 @@
 package kontakty.servlets;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.Date;
+import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,7 +12,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import kontakty.connectionUtils.MyConnectionUtils;
 import kontakty.models.Osoby;
+import kontakty.utils.DatabaseOsoby;
+import kontakty.utils.KontaktyUtils;
+import kontakty.utils.MyUtils;
 import kontakty.utils.OsobaWalidator;
 
 @WebServlet(urlPatterns = { "/doAdd" })
@@ -67,6 +73,8 @@ public class DoAddOsobaServlet extends HttpServlet {
 		id = request.getParameter("idOsoby");
 
 		String komunikat = null;
+		
+		Connection conn = null;
 
 		if (OsobaWalidator.sprawdzOsobaImie(osobaImie)) {
 
@@ -90,8 +98,38 @@ public class DoAddOsobaServlet extends HttpServlet {
 
 			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/addnew.jsp");
 			dispatcher.forward(request, response);
-		} 
+		} else if (OsobaWalidator.sprawdzDate(osobaUrodziny)) {
+			
+			komunikat = "Data mysi być w formacie RRRR-MM-DD";
+						
+			osobaUrodziny = "1999-01-01";
+			osoba = odtworzObiekt();
 
+			request.setAttribute("errorString", komunikat);
+			request.setAttribute("osoba", osoba);
+
+			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/addnew.jsp");
+			dispatcher.forward(request, response);
+		} else {
+			
+			try {
+				conn = MyUtils.nawiazIzwrocPolaczenie(request);
+				
+				DatabaseOsoby.zapiszOsobe(conn, odtworzObiekt());
+				
+				MyConnectionUtils.closeMyConnection(conn);
+				
+				request.setAttribute("errorString", "Zapis zakończony powodzeniem");
+				response.sendRedirect(request.getContextPath() + "/contacts");
+				
+			} catch (ClassNotFoundException | SQLException e) {
+				
+				System.out.println("Błąd podczas zapisu do bazy danych!");
+				request.setAttribute("errorString", "Błąd podczas zapisu do bazy danych!");
+				response.sendRedirect(request.getContextPath() + "/contacts");
+			}
+
+		}
 	}
 
 	@Override
@@ -117,7 +155,7 @@ public class DoAddOsobaServlet extends HttpServlet {
 		if (osobaUrodziny.equals(null) || osobaUrodziny.equals("")) {
 			osoba.setOsobaUrodziny(Date.valueOf("1900-01-01"));
 		} else {
-			osoba.setOsobaUrodziny(Date.valueOf(osobaUrodziny));
+			osoba.setOsobaUrodziny(KontaktyUtils.stringToDate(osobaUrodziny));
 		}
 		
 		return osoba;

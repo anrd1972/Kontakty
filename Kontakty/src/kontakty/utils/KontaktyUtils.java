@@ -1,8 +1,7 @@
 package kontakty.utils;
 
-import java.text.ParseException;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -24,45 +23,22 @@ public class KontaktyUtils {
 
 		return m.matches();
 	}
-	
-
 
 	/**
 	 * Sprawdzanie czy String jest w formacjie DD-MM-RRRR
+	 * 
 	 * @param pStr
 	 * @return
 	 */
 	public static boolean isDateFormatInString(String pStr) {
-		
-		String ePattern = "([0-9]{2})-([0-9]{2})-([0-9]{4})";
-		
+
+		String ePattern = "([0-9]{4})-([0-9]{2})-([0-9]{2})";
+
 		Pattern p = Pattern.compile(ePattern);
 		Matcher m = p.matcher(pStr);
 
 		return m.matches();
-		
-	}
 
-	/**
-	 * Konwersja String na Date
-	 * 
-	 * @param pData
-	 * @return
-	 */
-	public static Date stringToDate(String pData) {
-
-		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-		Date data = null;
-
-		try {
-
-			data = formatter.parse(pData);
-
-		} catch (ParseException e) {
-			System.out.println("Problem z konwersją String na Date");
-		}
-
-		return data;
 	}
 
 	/**
@@ -81,9 +57,34 @@ public class KontaktyUtils {
 
 		return isEmpty;
 	}
-	
+
+	/**
+	 * Konwersja <code>String</code> na <code>Date</code>
+	 * 
+	 * @param <code>String</code>
+	 * @return
+	 */
+	public static Date stringToDate(String pStr) {
+		Date sqlData = null;
+		sqlData = Date.valueOf(pStr);
+		return sqlData;
+	}
+
+	/**
+	 * Konwersja <code>Date</code> na <code>String</code>
+	 * 
+	 * @param <code>String</code>
+	 * @return
+	 */
+	public static String dateToString(Date pDate) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String dateStr = sdf.format(pDate);
+		return dateStr;
+	}
+
 	/**
 	 * Sprawdzanie czy dane do logowania sa puste
+	 * 
 	 * @param username
 	 * @param password
 	 * @return
@@ -99,7 +100,6 @@ public class KontaktyUtils {
 		return isEmpty;
 	}
 
-	
 	/**
 	 * Sprawdzanie czy wymagane dane z formularza nie są puste
 	 * 
@@ -109,7 +109,8 @@ public class KontaktyUtils {
 	 * @param userNazwisko
 	 * @return
 	 */
-	public static boolean sprawdzDaneRejestracja(String username, String password, String userImie, String userNazwisko) {
+	public static boolean sprawdzDaneRejestracja(String username, String password, String userImie,
+			String userNazwisko) {
 
 		boolean isEmpty = false;
 
@@ -120,5 +121,5 @@ public class KontaktyUtils {
 
 		return isEmpty;
 	}
-	
+
 }

@@ -53,18 +53,18 @@
 		<c:forEach items="${listaOsob}" var="osoba" >
 		
 			<tr>
-				<td>{$osoba.idOsoby}</td>
-				<td>{$osoba.osobaImie}</td>
-				<td>{$osoba.osobaNazwisko}</td>
-				<td>{$osoba.osobaEmail}</td>
-				<td>{$osoba.osobaTelefonDom}</td>
-				<td>{$osoba.osobaTelefonPraca}</td>
-				<td>{$osoba.osobaAdresUlica}</td>
-				<td>{$osoba.osobaAdresNrDomu}</td>
-				<td>{$osoba.osobaAdresNrMieszkania}</td>
-				<td>{$osoba.osobaAdresMiasto}</td>
-				<td>{$osoba.osobaAdresKodPocztowy</td>
-				<td>{$osoba.osobaUrodziny}</td>
+				<td>${osoba.idOsoby}</td>
+				<td>${osoba.osobaImie}</td>
+				<td>${osoba.osobaNazwisko}</td>
+				<td>${osoba.osobaEmail}</td>
+				<td>${osoba.osobaTelefonDom}</td>
+				<td>${osoba.osobaTelefonPraca}</td>
+				<td>${osoba.osobaAdresUlica}</td>
+				<td>${osoba.osobaAdresNrDomu}</td>
+				<td>${osoba.osobaAdresNrMieszkania}</td>
+				<td>${osoba.osobaAdresMiasto}</td>
+				<td>${osoba.osobaAdresKodPocztowy}</td>
+				<td>${osoba.osobaUrodziny}</td>
 				<td>Edytuj</td>
 				<td>Usuń</td>
 			</tr>

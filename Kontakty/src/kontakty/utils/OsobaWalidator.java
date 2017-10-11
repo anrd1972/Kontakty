@@ -28,5 +28,16 @@ public class OsobaWalidator {
 				
 		return komunikat;
 	}
+	
+	public static boolean sprawdzDate(String osobaData) {
+		
+		boolean komunikat = false;
+		
+		if (!KontaktyUtils.isDateFormatInString(osobaData)) {
+			komunikat = true;
+		}
+		
+		return komunikat;
+	}
 
 }
