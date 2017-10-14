@@ -73,13 +73,13 @@ public class DoAddOsobaServlet extends HttpServlet {
 		id = request.getParameter("idOsoby");
 
 		String komunikat = null;
-		
+
 		Connection conn = null;
 
 		if (OsobaWalidator.sprawdzOsobaImie(osobaImie)) {
 
 			komunikat = "Imie jest wymagane";
-			
+
 			osoba = odtworzObiekt();
 
 			request.setAttribute("errorString", komunikat);
@@ -90,7 +90,7 @@ public class DoAddOsobaServlet extends HttpServlet {
 		} else if (OsobaWalidator.sprawdzOsobaEmail(osobaEmail)) {
 
 			komunikat = "Pusty adres email lub niepoprawny format";
-			
+
 			osoba = odtworzObiekt();
 
 			request.setAttribute("errorString", komunikat);
@@ -99,9 +99,9 @@ public class DoAddOsobaServlet extends HttpServlet {
 			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/addnew.jsp");
 			dispatcher.forward(request, response);
 		} else if (OsobaWalidator.sprawdzDate(osobaUrodziny)) {
-			
+
 			komunikat = "Data mysi być w formacie RRRR-MM-DD";
-						
+
 			osobaUrodziny = "1999-01-01";
 			osoba = odtworzObiekt();
 
@@ -111,19 +111,25 @@ public class DoAddOsobaServlet extends HttpServlet {
 			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/addnew.jsp");
 			dispatcher.forward(request, response);
 		} else {
-			
+
 			try {
 				conn = MyUtils.nawiazIzwrocPolaczenie(request);
-				
-				DatabaseOsoby.zapiszOsobe(conn, odtworzObiekt());
-				
+
+				if (operacja.equals("D")) {
+
+					DatabaseOsoby.zapiszOsobe(conn, odtworzObiekt());
+
+				} else {
+					DatabaseOsoby.uspdateDanychOsoby(conn, odtworzObiekt());
+				}
+
 				MyConnectionUtils.closeMyConnection(conn);
-				
+
 				request.setAttribute("errorString", "Zapis zakończony powodzeniem");
 				response.sendRedirect(request.getContextPath() + "/contacts");
-				
+
 			} catch (ClassNotFoundException | SQLException e) {
-				
+
 				System.out.println("Błąd podczas zapisu do bazy danych!");
 				request.setAttribute("errorString", "Błąd podczas zapisu do bazy danych!");
 				response.sendRedirect(request.getContextPath() + "/contacts");
@@ -141,6 +147,11 @@ public class DoAddOsobaServlet extends HttpServlet {
 	// zwraca obiekt Osoby
 	public Osoby odtworzObiekt() {
 		osoba = new Osoby();
+
+		if (operacja.equals("M")) {
+			osoba.setIdOsoby(Integer.parseInt(id));
+		}
+
 		osoba.setOsobaImie(osobaImie);
 		osoba.setOsobaNazwisko(osobaNazwisko);
 		osoba.setOsobaEmail(osobaEmail);
@@ -157,7 +168,7 @@ public class DoAddOsobaServlet extends HttpServlet {
 		} else {
 			osoba.setOsobaUrodziny(KontaktyUtils.stringToDate(osobaUrodziny));
 		}
-		
+
 		return osoba;
 	}
 

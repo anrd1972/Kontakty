@@ -29,7 +29,7 @@
 	<h2>Lista zarejestrowanych kontaktów</h2>
 	
 	<p>
-		<a href="<%=context%>/new">Dodaj</a>
+		<a href="<%=context%>/new?mode=D&id=">Dodaj</a>
 	</p>
 	
 	<table border="1" align="center" cellpadding="4" cellspacing="0">
@@ -65,7 +65,11 @@
 				<td>${osoba.osobaAdresMiasto}</td>
 				<td>${osoba.osobaAdresKodPocztowy}</td>
 				<td>${osoba.osobaUrodziny}</td>
-				<td>Edytuj</td>
+				<td>
+					<input type="button"
+						onclick="window.location.href='${pageContext.request.contextPath}/new?mode=M&id=${osoba.idOsoby}'" 
+						value="Edytuj"/>
+				</td>
 				<td>Usuń</td>
 			</tr>
 		
