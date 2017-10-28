@@ -39,38 +39,25 @@
 			<td>Imię</td>
 			<td>Nazwisko</td>
 			<td>Email</td>
-			<td>Telefon dom</td>
-			<td>Telefon praca</td>
-			<td>Ulica</td>
-			<td>Nr domu</td>
-			<td>Nr mieszkania</td>
-			<td>Miasto</td>
-			<td>Kod pocztowy</td>
-			<td>Data urodzenia</td>
-			<td colspan="2">Operacje</td>
+			<td colspan="2" align="center">Operacje</td>
 		</tr>
 		
 		<c:forEach items="${listaOsob}" var="osoba" >
 		
 			<tr>
-				<td>${osoba.idOsoby}</td>
+				<td><input type="button"
+					onclick="window.location.href='${pageContext.request.contextPath}/detail?id=${osoba.idOsoby}'"
+					value="${osoba.idOsoby}"/></td>
 				<td>${osoba.osobaImie}</td>
 				<td>${osoba.osobaNazwisko}</td>
 				<td>${osoba.osobaEmail}</td>
-				<td>${osoba.osobaTelefonDom}</td>
-				<td>${osoba.osobaTelefonPraca}</td>
-				<td>${osoba.osobaAdresUlica}</td>
-				<td>${osoba.osobaAdresNrDomu}</td>
-				<td>${osoba.osobaAdresNrMieszkania}</td>
-				<td>${osoba.osobaAdresMiasto}</td>
-				<td>${osoba.osobaAdresKodPocztowy}</td>
-				<td>${osoba.osobaUrodziny}</td>
 				<td>
 					<input type="button"
 						onclick="window.location.href='${pageContext.request.contextPath}/new?mode=M&id=${osoba.idOsoby}'" 
 						value="Edytuj"/>
 				</td>
-				<td>Usuń</td>
+				<td><input type="button" onclick="window.location.href='${pageContext.request.contextPath}/rem?id=${osoba.idOsoby}'"
+						value="Usuń"/></td>
 			</tr>
 		
 		</c:forEach>

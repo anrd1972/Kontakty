@@ -279,5 +279,46 @@ public class DatabaseOsoby {
 		}
 
 	}
+	
+	/**
+	 * Usuwanie osoby kontaktowej z bazy
+	 * 
+	 * @param conn
+	 * @param id
+	 * @throws SQLException
+	 */
+	public static void usunOsobe(Connection conn, int id) throws SQLException {
+
+		String sql = "DELETE FROM Osoby WHERE idosoby = " + id;
+
+		PreparedStatement stm = null;
+
+		try {
+			stm = conn.prepareStatement(sql);
+
+			stm.executeUpdate(sql);
+			
+			stm.close();
+			conn.close();
+
+		} finally {
+			try {
+				if (stm != null) {
+					stm.close();
+				}
+			} catch (Exception e) {
+				// nic nie rob
+			}
+			try {
+				if(conn != null) {
+					conn.close();
+				}
+			} catch (Exception exc) {
+				//nic nie rob
+			}
+
+		}
+
+	}
 
 }
