@@ -32,6 +32,13 @@
 		<a href="<%=context%>/new?mode=D&id=">Dodaj</a>
 	</p>
 	
+	<div align="right">
+	<form title="szukaj" method="POST" action="contacts" >
+		<input type="text" name="find" />
+		<input type="submit" value="Szukaj" />
+	</form>
+	</div>
+	
 	<table border="1" align="center" cellpadding="4" cellspacing="0">
 	
 	<tr>

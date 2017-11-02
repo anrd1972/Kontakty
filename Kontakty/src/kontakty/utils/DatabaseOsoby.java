@@ -320,5 +320,80 @@ public class DatabaseOsoby {
 		}
 
 	}
+	
+	/**
+	 * Zwraca dane szukanej osoby
+	 * @param conn
+	 * @param idOsoba
+	 * @return
+	 * @throws SQLException
+	 */
+	public static List<Osoby> dajDaneSzukanejOsoby(Connection conn, String pStr) throws SQLException {
+
+		List<Osoby> listaOsob = new ArrayList<Osoby>();
+		String sql = "select * from osoby where osoba_imie like '%"+ pStr + "%' "
+				+ "or osoba_nazwisko like '%"+ pStr + "%' "
+				+ "or osoba_adres_miasto like '%" + pStr + "%'";
+		
+		PreparedStatement stm = null;
+		ResultSet rs = null;
+		
+		try {
+
+			stm = conn.prepareStatement(sql);
+			rs = stm.executeQuery();
+
+			while (rs.next()) {
+				Osoby osoba = new Osoby();
+				osoba.setIdOsoby(rs.getInt(1));
+				osoba.setOsobaImie(rs.getString(2));
+				osoba.setOsobaNazwisko(rs.getString(3));
+				osoba.setOsobaEmail(rs.getString(4));
+				osoba.setOsobaTelefonDom(rs.getString(5));
+				osoba.setOsobaTelefonPraca(rs.getString(6));
+				osoba.setOsobaAdresUlica(rs.getString(7));
+				osoba.setOsobaAdresNrDomu(rs.getString(8));
+				osoba.setOsobaAdresNrMieszkania(rs.getString(9));
+				osoba.setOsobaAdresMiasto(rs.getString(10));
+				osoba.setOsobaAdresKodPocztowy(rs.getString(11));
+				osoba.setOsobaUrodziny(rs.getDate(12));
+
+				listaOsob.add(osoba);
+			}
+
+			rs.close();
+			stm.close();
+
+			return listaOsob;
+
+		} catch (SQLException e) {
+			System.out.println("Błąd podczas wykonywania zapytania");
+
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception eRs) {
+				// nic nie rob
+			}
+			try {
+				if (stm != null) {
+					stm.close();
+				}
+			} catch (Exception eStm) {
+				// nic nie rob
+			}
+
+			try {
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (Exception eConn) {
+				// nic nie rob
+			}
+
+			throw e;
+		}
+	}
 
 }

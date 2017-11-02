@@ -41,16 +41,21 @@ public class OsobyMainPage extends HttpServlet {
 
 		int ileOsob = 0;
 
+		String szukanaOsoba = request.getParameter("find");
+
 		if (user == null) {
 			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/login.jsp");
 			dispatcher.forward(request, response);
 		} else {
-
 			try {
+
 				conn = MyUtils.nawiazIzwrocPolaczenie(request);
 
-				listaOsob = DatabaseOsoby.dajListeOsob(conn);
-
+				if (szukanaOsoba == null) {
+					listaOsob = DatabaseOsoby.dajListeOsob(conn);
+				} else {
+					listaOsob = DatabaseOsoby.dajDaneSzukanejOsoby(conn, szukanaOsoba);
+				}
 				ileOsob = listaOsob.size();
 
 			} catch (ClassNotFoundException | SQLException e) {
@@ -60,7 +65,7 @@ public class OsobyMainPage extends HttpServlet {
 			if (ileOsob == 0) {
 				errorString = "Lista jest pusta.";
 			}
-			
+
 			request.setAttribute("ile", ileOsob);
 			request.setAttribute("errorString", errorString);
 			request.setAttribute("listaOsob", listaOsob);
